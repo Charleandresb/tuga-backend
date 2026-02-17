@@ -1,0 +1,30 @@
+{
+  "name": "tuga-backend",
+  "version": "1.0.0",
+  "description": "Servidor Tuga",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Charles",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "celebrate": "^15.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-winston": "^4.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.2",
+    "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "eslint": "^9.38.0",
+    "eslint-plugin-import": "^2.32.0",
+    "nodemon": "^3.1.10"
+  }
+}
