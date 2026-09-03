@@ -63,6 +63,66 @@ export async function getProductVariants(req, res, next) {
   }
 }
 
+export async function hydrateCart(req, res, next) {
+  try {
+    const { items } = req.body;
+
+    const validatedItems = [];
+
+    for (const item of items) {
+      const variant = await Variant.findOne({
+        sku: item.sku,
+      }).populate({
+        path: "productId",
+        select: "name images description type defaultSku",
+      });
+
+      if (!variant) continue;
+
+      if (variant.stock <= 0) continue;
+
+      validatedItems.push({
+        ...item,
+        quantity: Math.min(item.quantity, variant.stock),
+        stock: variant.stock,
+        price: variant.price,
+        size: variant.size,
+        name: variant.productId.name,
+        images: variant.productId.images[0],
+        description: variant.productId.description,
+        type: variant.productId.type,
+        defaultSku: variant.productId.defaultSku,
+      });
+    }
+
+    res.send({
+      items: validatedItems,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function editVariant(req, res, next) {
+  try {
+    const { stock, variantId } = req.body;
+
+    const updatedVariant = await Variant.findByIdAndUpdate(
+      variantId,
+      {
+        stock: stock,
+      },
+      { new: true },
+    );
+    if (!updatedVariant) {
+      throw new NotFoundError("No se encontró variante con esa id");
+    }
+    res.send(updatedVariant);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function createProduct(req, res, next) {
   const { images, name, description, type, variants } = req.body;
 

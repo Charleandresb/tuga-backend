@@ -14,8 +14,9 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 const allowedCors = [
-  "https://tuganativewear.vercel.app",
-  "https://tuganativewearapi.vercel.app",
+  "http://localhost:4000",
+  "200.83.23.180",
+  "http://200.83.23.180",
 ];
 
 app.use(function (req, res, next) {

@@ -5,6 +5,8 @@ import {
   createProduct,
   getProduct,
   getProductVariants,
+  hydrateCart,
+  editVariant,
 } from "../controllers/product.js";
 
 const router = express.Router();
@@ -17,6 +19,10 @@ router.get("/sku", getProduct);
 
 router.get("/variants/:productId", getProductVariants);
 
+router.post("/cart/validate", hydrateCart);
+
 router.post("/", createProduct);
+
+router.patch("/variant/edit", editVariant);
 
 export default router;
